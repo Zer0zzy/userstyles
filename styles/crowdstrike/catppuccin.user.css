@@ -220,11 +220,10 @@
         --normal-hover: @overlay1 !important;
         --normal-idle: @surface2 !important;
         --normal-pressed: @overlay0 !important;
-        --overlay-0: @overlay1 !important;
-        --overlay-0\.5: fade(@overlay1, 21%) !important;
+        // ---overlay-0\.5: fade(@overlay1, 21%) !important;
         --overlay-1: fade(@overlay1, 40%) !important;
         --overlay-2: fade(@overlay1, 99%) !important;
-        --overlay-reverse-0\.5: desaturate(@overlay0, 20%) !important;
+        // --overlay-reverse-0\.5: desaturate(@overlay0, 20%) !important;
         --positive: @teal !important;
         --primary-hover: @overlay2 !important;
         --primary-idle: @overlay0 !important;
@@ -262,11 +261,6 @@
 		@sapphire: #209fb5;
 		@blue: #1e66f5;
 		@lavender: #7287fd;
-		@purple: #9a4bff;
-		@turquoise: #26c3a3;
-		@lime: #7fbf20;
-		@coral: #ff5e50;
-		@indigo: #4848a3;
 		@text: #4c4f69;
 		@subtext1: #5c5f77;
 		@subtext0: #6c6f85;
@@ -296,11 +290,6 @@
 		@sapphire: #85c1dc;
 		@blue: #8caaee;
 		@lavender: #babbf1;
-		@purple: #9d79d6;
-		@turquoise: #63e6be;
-		@lime: #b8e994;
-		@coral: #ff8e72;
-		@indigo: #6667ab;
 		@text: #c6d0f5;
 		@subtext1: #b5bfe2;
 		@subtext0: #a5adce;
@@ -330,11 +319,6 @@
 		@sapphire: #7dc4e4;
 		@blue: #8aadf4;
 		@lavender: #b7bdf8;
-		@purple: #9d79d6;
-		@turquoise: #63e6be;
-		@lime: #b8e994;
-		@coral: #ff8e72;
-		@indigo: #6667ab;
 		@text: #cad3f5;
 		@subtext1: #b8c0e0;
 		@subtext0: #a5adcb;
@@ -364,11 +348,6 @@
 		@sapphire: #74c7ec;
 		@blue: #89b4fa;
 		@lavender: #b4befe;
-		@purple: #9d79d6;
-		@turquoise: #63e6be;
-		@lime: #b8e994;
-		@coral: #ff8e72;
-		@indigo: #6667ab;
 		@text: #cdd6f4;
 		@subtext1: #bac2de;
 		@subtext0: #a6adc8;
@@ -384,3 +363,4 @@
 	}
 	;
 }
+        
