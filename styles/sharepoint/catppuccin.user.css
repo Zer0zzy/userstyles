@@ -13,6 +13,7 @@
 @var select darkFlavor "Dark Flavor" ["latte:Latte", "frappe:Frappé", "macchiato:Macchiato", "mocha:Mocha*"]
 @var select accentColor "Accent" ["rosewater:Rosewater", "flamingo:Flamingo", "pink:Pink", "mauve:Mauve*", "red:Red", "maroon:Maroon", "peach:Peach", "yellow:Yellow", "green:Green", "teal:Teal", "blue:Blue", "sapphire:Sapphire", "sky:Sky", "lavender:Lavender", "subtext0:Gray"]
 ==/UserStyle== */
+
 @-moz-document domain("sharepoint.com"), domain("office.net"), domain("officeapps.live.com") {
     #catppuccin(@lookup, @accent) {
         @rosewater: @catppuccin[@@lookup][@rosewater];
@@ -190,7 +191,7 @@
         #edge-translate-panel-body,
         .MuiTypography-body1,
         .nfe-quote-text {
-            color: var(--darkreader-neutral-text) !important;
+            color: #a9c5e8 !important;
         }
         gr-main-header {
             background-color: #0f3947 !important;
@@ -199,7 +200,7 @@
         .tou-mignzq,
         .tou-1b6i2ox,
         .tou-lnqlqk {
-            background-color: var(--darkreader-neutral-background) !important;
+            background-color: #181824 !important;
         }
         .tou-75mvi {
             background-color: #031f28 !important;
@@ -220,38 +221,38 @@
             background-color: #19556a !important;
         }
         div.mermaid-viewer-control-panel .btn {
-            background-color: var(--darkreader-neutral-background);
-            fill: var(--darkreader-neutral-text);
+            background-color: #181824;
+            fill: #a9c5e8;
         }
         svg g rect.er {
-            fill: var(--darkreader-neutral-background) !important;
+            fill: #181824 !important;
         }
         svg g rect.er.entityBox {
-            fill: var(--darkreader-neutral-background) !important;
+            fill: #181824 !important;
         }
         svg g rect.er.attributeBoxOdd {
-            fill: var(--darkreader-neutral-background) !important;
+            fill: #181824 !important;
         }
         svg g rect.er.attributeBoxEven {
-            fill: var(--darkreader-selection-background);
+            fill: #004ba7;
             fill-opacity: 0.8 !important;
         }
         svg rect.er.relationshipLabelBox {
-            fill: var(--darkreader-neutral-background) !important;
+            fill: #181824 !important;
         }
         svg g g.nodes rect,
         svg g g.nodes polygon {
-            fill: var(--darkreader-neutral-background) !important;
+            fill: #181824 !important;
         }
         svg g rect.task {
-            fill: var(--darkreader-selection-background) !important;
+            fill: #004ba7 !important;
         }
         svg line.messageLine0,
         svg line.messageLine1 {
-            stroke: var(--darkreader-neutral-text) !important;
+            stroke: #a9c5e8 !important;
         }
         div.mermaid .actor {
-            fill: var(--darkreader-neutral-background) !important;
+            fill: #181824 !important;
         }
         mitid-authenticators-code-app > .code-app-container {
             background-color: white !important;
@@ -263,14 +264,14 @@
         .ms-FocusZone,
         .ms-DetailsRow-cell,
         .ms-Button {
-            background-color: var(--darkreader-neutral-background) !important;
+            background-color: #181824 !important;
         }
         .ms-DetailsRow-cell,
         .ms-FocusZone,
         .ms-Button,
         .od-ItemContent-title,
         .ms-DetailsHeader-cellName {
-            color: var(--darkreader-neutral-text) !important;
+            color: #a9c5e8 !important;
         }
         .ms-Button {
             border-color: #0e0e0e !important;
