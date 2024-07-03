@@ -1,0 +1,286 @@
+/* ==UserStyle==
+@name           Sharepoint Catppuccin
+@namespace github.com/zer0zzy/userstyles/styles/
+@homepageURL https://github.com/catppuccin/userstyles/tree/main/styles/sharepoint
+@updateURL https://github.com/zer0zzy/userstyles/raw/main/styles/sharepoint/catppuccin.user.css
+@version        1.0.0
+@description Soothing pastel theme for Sharepoint
+@author         Me
+@license MIT
+
+@preprocessor less
+@var select lightFlavor "Light Flavor" ["latte:Latte*", "frappe:Frappé", "macchiato:Macchiato", "mocha:Mocha"]
+@var select darkFlavor "Dark Flavor" ["latte:Latte", "frappe:Frappé", "macchiato:Macchiato", "mocha:Mocha*"]
+@var select accentColor "Accent" ["rosewater:Rosewater", "flamingo:Flamingo", "pink:Pink", "mauve:Mauve*", "red:Red", "maroon:Maroon", "peach:Peach", "yellow:Yellow", "green:Green", "teal:Teal", "blue:Blue", "sapphire:Sapphire", "sky:Sky", "lavender:Lavender", "subtext0:Gray"]
+==/UserStyle== */
+@-moz-document domain("sharepoint.com"), domain("office.net"), domain("officeapps.live.com") {
+    #catppuccin(@lookup, @accent) {
+        @rosewater: @catppuccin[@@lookup][@rosewater];
+        @flamingo: @catppuccin[@@lookup][@flamingo];
+        @pink: @catppuccin[@@lookup][@pink];
+        @mauve: @catppuccin[@@lookup][@mauve];
+        @red: @catppuccin[@@lookup][@red];
+        @maroon: @catppuccin[@@lookup][@maroon];
+        @peach: @catppuccin[@@lookup][@peach];
+        @yellow: @catppuccin[@@lookup][@yellow];
+        @green: @catppuccin[@@lookup][@green];
+        @teal: @catppuccin[@@lookup][@teal];
+        @sky: @catppuccin[@@lookup][@sky];
+        @sapphire: @catppuccin[@@lookup][@sapphire];
+        @blue: @catppuccin[@@lookup][@blue];
+        @lavender: @catppuccin[@@lookup][@lavender];
+        @text: @catppuccin[@@lookup][@text];
+        @subtext1: @catppuccin[@@lookup][@subtext1];
+        @subtext0: @catppuccin[@@lookup][@subtext0];
+        @overlay2: @catppuccin[@@lookup][@overlay2];
+        @overlay1: @catppuccin[@@lookup][@overlay1];
+        @overlay0: @catppuccin[@@lookup][@overlay0];
+        @surface2: @catppuccin[@@lookup][@surface2];
+        @surface1: @catppuccin[@@lookup][@surface1];
+        @surface0: @catppuccin[@@lookup][@surface0];
+        @base: @catppuccin[@@lookup][@base];
+        @mantle: @catppuccin[@@lookup][@mantle];
+        @crust: @catppuccin[@@lookup][@crust];
+        @accent-color: @catppuccin[@@lookup][@@accent];
+
+        color-scheme: if(@lookup = latte, light, dark);
+        
+        ::selection {
+            background-color: fade(@accent-color, 30%);
+        }
+
+        /* User-Agent Style */
+            html {
+                background-color: #1d1d2d !important;
+            }
+            html {
+                color-scheme: dark !important;
+            }
+            iframe {
+                color-scheme: initial;
+            }
+            html,
+            body {
+                background-color: #1d1d2d;
+            }
+            html,
+            body {
+                border-color: #2544a9;
+                color: #c9d2ef;
+            }
+            a {
+                color: #328efa;
+            }
+            table {
+                border-color: #45456a;
+            }
+            mark {
+                color: #c9d2ef;
+            }
+            ::placeholder {
+                color: #6e87dc;
+            }
+            input:-webkit-autofill,
+            textarea:-webkit-autofill,
+            select:-webkit-autofill {
+                background-color: #4b5000 !important;
+                color: #c9d2ef !important;
+            }
+            ::-webkit-scrollbar {
+                background-color: #232336;
+                color: #637ed9;
+            }
+            ::-webkit-scrollbar-thumb {
+                background-color: #3c3c5c;
+            }
+            ::-webkit-scrollbar-thumb:hover {
+                background-color: #49496f;
+            }
+            ::-webkit-scrollbar-thumb:active {
+                background-color: #3c3c5b;
+            }
+            ::-webkit-scrollbar-corner {
+                background-color: #1d1d2d;
+            }
+            ::selection {
+                background-color: #004ba7 !important;
+                color: #c9d2ef !important;
+            }
+            ::-moz-selection {
+                background-color: #004ba7 !important;
+                color: #c9d2ef !important;
+            }
+
+        /* Invert Style */
+        .jfk-bubble.gtx-bubble,
+        .captcheck_answer_label > input + img,
+        span#closed_text > img[src^="https://www.gstatic.com/images/branding/googlelogo"],
+        span[data-href^="https://www.hcaptcha.com/"] > #icon,
+        ::-webkit-calendar-picker-indicator,
+        img.Wirisformula,
+        img.WACPageImg {
+            filter: invert(100%) hue-rotate(180deg) brightness(98%) contrast(90%) !important;
+        }
+
+        /* Variables Style */
+        :root {
+            --darkreader-neutral-background: #181824;
+            --darkreader-neutral-text: #a9c5e8;
+            --darkreader-selection-background: #004ba7;
+            --darkreader-selection-text: #c9d2ef;
+        }
+
+        /* Modified CSS */
+        #upsellBannerForPhone button {
+            border-color: initial;
+            border-style: initial;
+            border-width: 0px;
+            color: rgb(201, 210, 239);
+            outline-color: initial;
+        }
+        #upsellBannerForPad,
+        #upsellBannerForPhone {
+            background-color: rgb(29, 29, 45);
+            box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 5px 0px;
+        }
+        #upsellBannerForPad iframe,
+        #upsellBannerForPhone iframe {
+            border-color: initial;
+            border-style: initial;
+            border-width: 0px;
+        }
+        #upsellBannerForPad button,
+        #upsellBannerForPhone button {
+            background-color: rgb(29, 29, 45);
+            border-color: initial;
+            border-style: initial;
+            border-width: 0px;
+            color: rgb(201, 210, 239);
+            outline-color: initial;
+        }
+        .od-Wac-Share-Iframe {
+            border-color: initial;
+            border-style: none;
+            border-width: initial;
+        }
+        .VCvEX0GkNVnjIs4mcPdJ {
+            background-color: rgb(23, 23, 34);
+        }
+        .lLFji2JIIWB51LkuYBKM {
+            background-color: rgb(29, 29, 45);
+            border-color: initial;
+            border-style: none;
+            border-width: initial;
+            box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 5px 0px;
+            outline-color: transparent;
+        }
+
+        /* Override Style */
+        .vimvixen-hint {
+            background-color: #795100 !important;
+            border-color: #d4ac13 !important;
+            color: #eee3c4 !important;
+        }
+        #vimvixen-console-frame {
+            color-scheme: light !important;
+        }
+        ::placeholder {
+            opacity: 0.5 !important;
+        }
+        #edge-translate-panel-body,
+        .MuiTypography-body1,
+        .nfe-quote-text {
+            color: var(--darkreader-neutral-text) !important;
+        }
+        gr-main-header {
+            background-color: #0f3947 !important;
+        }
+        .tou-z65h9k,
+        .tou-mignzq,
+        .tou-1b6i2ox,
+        .tou-lnqlqk {
+            background-color: var(--darkreader-neutral-background) !important;
+        }
+        .tou-75mvi {
+            background-color: #031f28 !important;
+        }
+        .tou-ta9e87,
+        .tou-1w3fhi0,
+        .tou-1b8t2us,
+        .tou-py7lfi,
+        .tou-1lpmd9d,
+        .tou-1frrtv8,
+        .tou-17ezmgn {
+            background-color: #0a0a0a !important;
+        }
+        .tou-uknfeu {
+            background-color: #221503 !important;
+        }
+        .tou-6i3zyv {
+            background-color: #19556a !important;
+        }
+        div.mermaid-viewer-control-panel .btn {
+            background-color: var(--darkreader-neutral-background);
+            fill: var(--darkreader-neutral-text);
+        }
+        svg g rect.er {
+            fill: var(--darkreader-neutral-background) !important;
+        }
+        svg g rect.er.entityBox {
+            fill: var(--darkreader-neutral-background) !important;
+        }
+        svg g rect.er.attributeBoxOdd {
+            fill: var(--darkreader-neutral-background) !important;
+        }
+        svg g rect.er.attributeBoxEven {
+            fill: var(--darkreader-selection-background);
+            fill-opacity: 0.8 !important;
+        }
+        svg rect.er.relationshipLabelBox {
+            fill: var(--darkreader-neutral-background) !important;
+        }
+        svg g g.nodes rect,
+        svg g g.nodes polygon {
+            fill: var(--darkreader-neutral-background) !important;
+        }
+        svg g rect.task {
+            fill: var(--darkreader-selection-background) !important;
+        }
+        svg line.messageLine0,
+        svg line.messageLine1 {
+            stroke: var(--darkreader-neutral-text) !important;
+        }
+        div.mermaid .actor {
+            fill: var(--darkreader-neutral-background) !important;
+        }
+        mitid-authenticators-code-app > .code-app-container {
+            background-color: white !important;
+            padding-top: 1rem;
+        }
+        iframe#unpaywall[src$="unpaywall.html"] {
+            color-scheme: light !important;
+        }
+        .ms-FocusZone,
+        .ms-DetailsRow-cell,
+        .ms-Button {
+            background-color: var(--darkreader-neutral-background) !important;
+        }
+        .ms-DetailsRow-cell,
+        .ms-FocusZone,
+        .ms-Button,
+        .od-ItemContent-title,
+        .ms-DetailsHeader-cellName {
+            color: var(--darkreader-neutral-text) !important;
+        }
+        .ms-Button {
+            border-color: #0e0e0e !important;
+        }
+    }
+}
+/* prettier-ignore */
+@catppuccin: {
+  @latte:     { @rosewater: #dc8a78; @flamingo: #dd7878; @pink: #ea76cb; @mauve: #8839ef; @red: #d20f39; @maroon: #e64553; @peach: #fe640b; @yellow: #df8e1d; @green: #40a02b; @teal: #179299; @sky: #04a5e5; @sapphire: #209fb5; @blue: #1e66f5; @lavender: #7287fd; @text: #4c4f69; @subtext1: #5c5f77; @subtext0: #6c6f85; @overlay2: #7c7f93; @overlay1: #8c8fa1; @overlay0: #9ca0b0; @surface2: #acb0be; @surface1: #bcc0cc; @surface0: #ccd0da; @base: #eff1f5; @mantle: #e6e9ef; @crust: #dce0e8; };
+  @frappe:    { @rosewater: #f2d5cf; @flamingo: #eebebe; @pink: #f4b8e4; @mauve: #ca9ee6; @red: #e78284; @maroon: #ea999c; @peach: #ef9f76; @yellow: #e5c890; @green: #a6d189; @teal: #81c8be; @sky: #99d1db; @sapphire: #85c1dc; @blue: #8caaee; @lavender: #babbf1; @text: #c6d0f5; @subtext1: #b5bfe2; @subtext0: #a5adce; @overlay2: #949cbb; @overlay1: #838ba7; @overlay0: #737994; @surface2: #626880; @surface1: #51576d; @surface0: #414559; @base: #303446; @mantle: #292c3c; @crust: #232634; };
+  @macchiato: { @rosewater: #f4dbd6; @flamingo: #f0c6c6; @pink: #f5bde6; @mauve: #c6a0f6; @red: #ed8796; @maroon: #ee99a0; @peach: #f5a97f; @yellow: #eed49f; @green: #a6da95; @teal: #8bd5ca; @sky: #91d7e3; @sapphire: #7dc4e4; @blue: #8aadf4; @lavender: #b7bdf8; @text: #cad3f5; @subtext1: #b8c0e0; @subtext0: #a5adcb; @overlay2: #939ab7; @overlay1: #8087a2; @overlay0: #6e738d; @surface2: #5b6078; @surface1: #494d64; @surface0: #363a4f; @base: #24273a; @mantle: #1e2030; @crust: #181926; };
+  @mocha:     { @rosewater: #f5e0dc; @flamingo: #f2cdcd; @pink: #f5c2e7; @mauve: #cba6f7; @red: #f38ba8; @maroon: #eba0ac; @peach: #fab387; @yellow: #f9e2af; @green: #a6e3a1; @teal: #94e2d5; @sky: #89dceb; @sapphire: #74c7ec; @blue: #89b4fa; @lavender: #b4befe; @text: #cdd6f4; @subtext1: #bac2de; @subtext0: #a6adc8; @overlay2: #9399b2; @overlay1: #7f849c; @overlay0: #6c7086; @surface2: #585b70; @surface1: #45475a; @surface0: #313244; @base: #1e1e2e; @mantle: #181825; @crust: #11111b; };
+}
