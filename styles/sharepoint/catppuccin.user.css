@@ -1,11 +1,11 @@
 /* ==UserStyle==
-@name           Sharepoint Catppuccin
+@name Sharepoint Catppuccin
 @namespace github.com/zer0zzy/userstyles/styles/
 @homepageURL https://github.com/catppuccin/userstyles/tree/main/styles/sharepoint
 @updateURL https://github.com/zer0zzy/userstyles/raw/main/styles/sharepoint/catppuccin.user.css
-@version        1.0.0
+@version 1.0.0
 @description Soothing pastel theme for Sharepoint
-@author         Me
+@author Zer0zzy
 @license MIT
 
 @preprocessor less
@@ -13,8 +13,20 @@
 @var select darkFlavor "Dark Flavor" ["latte:Latte", "frappe:Frappé", "macchiato:Macchiato", "mocha:Mocha*"]
 @var select accentColor "Accent" ["rosewater:Rosewater", "flamingo:Flamingo", "pink:Pink", "mauve:Mauve*", "red:Red", "maroon:Maroon", "peach:Peach", "yellow:Yellow", "green:Green", "teal:Teal", "blue:Blue", "sapphire:Sapphire", "sky:Sky", "lavender:Lavender", "subtext0:Gray"]
 ==/UserStyle== */
+@-moz-document domain("corsicatechnologies-my.sharepoint.com"),
+domain("usc-excel.officeapps.live.com"),
+domain("res-1.cdn.office.net") {
+    @media (prefers-color-scheme: dark) {
+        :root {
+            #catppuccin(@darkFlavor, @accentColor);
+        }
+    }
+    @media (prefers-color-scheme: light) {
+        :root {
+            #catppuccin(@lightFlavor, @accentColor);
+        }
+    }
 
-@-moz-document domain("sharepoint.com"), domain("office.net"), domain("officeapps.live.com") {
     #catppuccin(@lookup, @accent) {
         @rosewater: @catppuccin[@@lookup][@rosewater];
         @flamingo: @catppuccin[@@lookup][@flamingo];
@@ -44,73 +56,79 @@
         @crust: @catppuccin[@@lookup][@crust];
         @accent-color: @catppuccin[@@lookup][@@accent];
 
-        color-scheme: if(@lookup = latte, light, dark);
-        
+        color-scheme: if(@lookup =latte, light, dark);
+
         ::selection {
             background-color: fade(@accent-color, 30%);
         }
-
-        /* User-Agent Style */
-            html {
-                background-color: #1d1d2d !important;
-            }
-            html {
-                color-scheme: dark !important;
-            }
-            iframe {
-                color-scheme: initial;
-            }
-            html,
-            body {
-                background-color: #1d1d2d;
-            }
-            html,
-            body {
-                border-color: #2544a9;
-                color: #c9d2ef;
-            }
-            a {
-                color: #328efa;
-            }
-            table {
-                border-color: #45456a;
-            }
-            mark {
-                color: #c9d2ef;
-            }
-            ::placeholder {
-                color: #6e87dc;
-            }
-            input:-webkit-autofill,
-            textarea:-webkit-autofill,
-            select:-webkit-autofill {
-                background-color: #4b5000 !important;
-                color: #c9d2ef !important;
-            }
-            ::-webkit-scrollbar {
-                background-color: #232336;
-                color: #637ed9;
-            }
-            ::-webkit-scrollbar-thumb {
-                background-color: #3c3c5c;
-            }
-            ::-webkit-scrollbar-thumb:hover {
-                background-color: #49496f;
-            }
-            ::-webkit-scrollbar-thumb:active {
-                background-color: #3c3c5b;
-            }
-            ::-webkit-scrollbar-corner {
-                background-color: #1d1d2d;
-            }
-            ::selection {
-                background-color: #004ba7 !important;
-                color: #c9d2ef !important;
-            }
-            ::-moz-selection {
-                background-color: #004ba7 !important;
-                color: #c9d2ef !important;
-            }
+        .grid-visual-refresh .ewa-stb-ltr,
+        .grid-visual-refresh .ewa-stb-rtl {
+            background-color: #363a4f !important;
+        }
+        div[role="presentation"] {
+            background-color: #8087a2 !important;
+            color: #181926 !important;
+        }
+        #application.WACFrameWord {
+            background-color: #5b6078 !important;
+            background-image: none !important;
+        }
+        html {
+            background-color: #1d1d2d !important;
+            color-scheme: dark !important;
+        }
+        iframe {
+            color-scheme: initial;
+        }
+        html,
+        body {
+            background-color: #1d1d2d;
+            border-color: #2544a9;
+            color: @base;
+        }
+        a {
+            color: #328efa;
+        }
+        table {
+            border-color: #45456a;
+        }
+        mark {
+            color: #c9d2ef;
+        }
+        ::placeholder {
+            color: #6e87dc;
+            opacity: 0.5 !important;
+        }
+        input:-webkit-autofill,
+        textarea:-webkit-autofill,
+        select:-webkit-autofill {
+            background-color: #4b5000 !important;
+            color: #c9d2ef !important;
+        }
+        ::-webkit-scrollbar {
+            background-color: #232336;
+            color: #637ed9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #3c3c5c;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #49496f;
+        }
+        ::-webkit-scrollbar-thumb:active {
+            background-color: #3c3c5b;
+        }
+        ::-webkit-scrollbar-corner {
+            background-color: #1d1d2d;
+        }
+        ::selection {
+            background-color: #004ba7 !important;
+            color: #c9d2ef !important;
+        }
+        ::-moz-selection {
+            background-color: #004ba7 !important;
+            color: #c9d2ef !important;
+        }
 
         /* Invert Style */
         .jfk-bubble.gtx-bubble,
@@ -159,10 +177,42 @@
             color: rgb(201, 210, 239);
             outline-color: initial;
         }
+        #RibbonTopBarContainer,.body-101, .ewa-ribbon, #RibbonContainer, #Ribbon {
+            background-color: @base !important;
+            color: @base !important;
+        }
+        #m_excelWebRenderer_ewaCtl_commandUIPlaceHolder > div {
+            background-color: @base !important;
+            color: @base !important;
+        }
+        #RibbonContainer div[style="background-color: var(--colorNeutralBackground3);"], #RibbonContainer > div:nth-child(1) > div:nth-child(2) > div:nth-child(1), #RibbonContainer > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) {
+            background-color: @base !important;
+            color: @base !important;
+        }
+        .tabContentContainer-140, .root-139 {
+            color: @text !important;
+            background-color: @surface0 !important;
+        }
+        .o365sx-navbar, .ms-Button,
+        .o365cs-base .o365sx-button,
+        [data-unique-id="GoPremiumButton"],
+        [data-unique-id="DocumentTitleButton"],
+        #SearchButton {
+            background-color: @surface0 !important;
+            color: @text !important;
+        }
+        .ms-Button, .o365sx-button, [data-unique-id="GoPremiumButton"],
+        [data-unique-id="DocumentTitleButton"],
+        #SearchButton {
+            border-color: @base !important;
+        }
         .od-Wac-Share-Iframe {
             border-color: initial;
             border-style: none;
             border-width: initial;
+        }
+        .f19n0e5 {
+            color: @text !important;
         }
         .VCvEX0GkNVnjIs4mcPdJ {
             background-color: rgb(23, 23, 34);
@@ -220,50 +270,59 @@
         .tou-6i3zyv {
             background-color: #19556a !important;
         }
-        div.mermaid-viewer-control-panel .btn {
-            background-color: #181824;
-            fill: #a9c5e8;
+        div.mermaid-viewer-control-panel {
+            .btn {
+                background-color: #181824;
+                fill: #a9c5e8;
+            }
         }
-        svg g rect.er {
-            fill: #181824 !important;
+        svg,
+        i,
+        span.fui-Button_icon {
+            color: @text !important;
         }
-        svg g rect.er.entityBox {
-            fill: #181824 !important;
+        svg {
+            g {
+                rect.er {
+                    fill: #181824 !important;
+                }
+                rect.er.entityBox {
+                    fill: #181824 !important;
+                }
+                rect.er.attributeBoxOdd {
+                    fill: #181824 !important;
+                }
+                rect.er.attributeBoxEven {
+                    fill: #004ba7;
+                    fill-opacity: 0.8 !important;
+                }
+                rect.task {
+                    fill: #004ba7 !important;
+                }
+                g.nodes {
+                    rect,
+                    polygon {
+                        fill: #181824 !important;
+                    }
+                }
+            }
+            rect.er.relationshipLabelBox {
+                fill: #181824 !important;
+            }
+            line.messageLine0,
+            line.messageLine1 {
+                stroke: #a9c5e8 !important;
+            }
         }
-        svg g rect.er.attributeBoxOdd {
-            fill: #181824 !important;
+
+        div.mermaid {
+            .actor {
+                fill: #181824 !important;
+            }
         }
-        svg g rect.er.attributeBoxEven {
-            fill: #004ba7;
-            fill-opacity: 0.8 !important;
-        }
-        svg rect.er.relationshipLabelBox {
-            fill: #181824 !important;
-        }
-        svg g g.nodes rect,
-        svg g g.nodes polygon {
-            fill: #181824 !important;
-        }
-        svg g rect.task {
-            fill: #004ba7 !important;
-        }
-        svg line.messageLine0,
-        svg line.messageLine1 {
-            stroke: #a9c5e8 !important;
-        }
-        div.mermaid .actor {
-            fill: #181824 !important;
-        }
-        mitid-authenticators-code-app > .code-app-container {
-            background-color: white !important;
-            padding-top: 1rem;
-        }
-        iframe#unpaywall[src$="unpaywall.html"] {
-            color-scheme: light !important;
-        }
+
         .ms-FocusZone,
-        .ms-DetailsRow-cell,
-        .ms-Button {
+        .ms-DetailsRow-cell {
             background-color: #181824 !important;
         }
         .ms-DetailsRow-cell,
@@ -273,15 +332,125 @@
         .ms-DetailsHeader-cellName {
             color: #a9c5e8 !important;
         }
-        .ms-Button {
-            border-color: #0e0e0e !important;
-        }
     }
 }
 /* prettier-ignore */
 @catppuccin: {
-  @latte:     { @rosewater: #dc8a78; @flamingo: #dd7878; @pink: #ea76cb; @mauve: #8839ef; @red: #d20f39; @maroon: #e64553; @peach: #fe640b; @yellow: #df8e1d; @green: #40a02b; @teal: #179299; @sky: #04a5e5; @sapphire: #209fb5; @blue: #1e66f5; @lavender: #7287fd; @text: #4c4f69; @subtext1: #5c5f77; @subtext0: #6c6f85; @overlay2: #7c7f93; @overlay1: #8c8fa1; @overlay0: #9ca0b0; @surface2: #acb0be; @surface1: #bcc0cc; @surface0: #ccd0da; @base: #eff1f5; @mantle: #e6e9ef; @crust: #dce0e8; };
-  @frappe:    { @rosewater: #f2d5cf; @flamingo: #eebebe; @pink: #f4b8e4; @mauve: #ca9ee6; @red: #e78284; @maroon: #ea999c; @peach: #ef9f76; @yellow: #e5c890; @green: #a6d189; @teal: #81c8be; @sky: #99d1db; @sapphire: #85c1dc; @blue: #8caaee; @lavender: #babbf1; @text: #c6d0f5; @subtext1: #b5bfe2; @subtext0: #a5adce; @overlay2: #949cbb; @overlay1: #838ba7; @overlay0: #737994; @surface2: #626880; @surface1: #51576d; @surface0: #414559; @base: #303446; @mantle: #292c3c; @crust: #232634; };
-  @macchiato: { @rosewater: #f4dbd6; @flamingo: #f0c6c6; @pink: #f5bde6; @mauve: #c6a0f6; @red: #ed8796; @maroon: #ee99a0; @peach: #f5a97f; @yellow: #eed49f; @green: #a6da95; @teal: #8bd5ca; @sky: #91d7e3; @sapphire: #7dc4e4; @blue: #8aadf4; @lavender: #b7bdf8; @text: #cad3f5; @subtext1: #b8c0e0; @subtext0: #a5adcb; @overlay2: #939ab7; @overlay1: #8087a2; @overlay0: #6e738d; @surface2: #5b6078; @surface1: #494d64; @surface0: #363a4f; @base: #24273a; @mantle: #1e2030; @crust: #181926; };
-  @mocha:     { @rosewater: #f5e0dc; @flamingo: #f2cdcd; @pink: #f5c2e7; @mauve: #cba6f7; @red: #f38ba8; @maroon: #eba0ac; @peach: #fab387; @yellow: #f9e2af; @green: #a6e3a1; @teal: #94e2d5; @sky: #89dceb; @sapphire: #74c7ec; @blue: #89b4fa; @lavender: #b4befe; @text: #cdd6f4; @subtext1: #bac2de; @subtext0: #a6adc8; @overlay2: #9399b2; @overlay1: #7f849c; @overlay0: #6c7086; @surface2: #585b70; @surface1: #45475a; @surface0: #313244; @base: #1e1e2e; @mantle: #181825; @crust: #11111b; };
+    @latte: {
+        @rosewater: #dc8a78;
+        @flamingo: #dd7878;
+        @pink: #ea76cb;
+        @mauve: #8839ef;
+        @red: #d20f39;
+        @maroon: #e64553;
+        @peach: #fe640b;
+        @yellow: #df8e1d;
+        @green: #40a02b;
+        @teal: #179299;
+        @sky: #04a5e5;
+        @sapphire: #209fb5;
+        @blue: #1e66f5;
+        @lavender: #7287fd;
+        @text: #4c4f69;
+        @subtext1: #5c5f77;
+        @subtext0: #6c6f85;
+        @overlay2: #7c7f93;
+        @overlay1: #8c8fa1;
+        @overlay0: #9ca0b0;
+        @surface2: #acb0be;
+        @surface1: #bcc0cc;
+        @surface0: #ccd0da;
+        @base: #eff1f5;
+        @mantle: #e6e9ef;
+        @crust: #dce0e8;
+    }
+    ;
+    @frappe: {
+        @rosewater: #f2d5cf;
+        @flamingo: #eebebe;
+        @pink: #f4b8e4;
+        @mauve: #ca9ee6;
+        @red: #e78284;
+        @maroon: #ea999c;
+        @peach: #ef9f76;
+        @yellow: #e5c890;
+        @green: #a6d189;
+        @teal: #81c8be;
+        @sky: #99d1db;
+        @sapphire: #85c1dc;
+        @blue: #8caaee;
+        @lavender: #babbf1;
+        @text: #c6d0f5;
+        @subtext1: #b5bfe2;
+        @subtext0: #a5adce;
+        @overlay2: #949cbb;
+        @overlay1: #838ba7;
+        @overlay0: #737994;
+        @surface2: #626880;
+        @surface1: #51576d;
+        @surface0: #414559;
+        @base: #303446;
+        @mantle: #292c3c;
+        @crust: #232634;
+    }
+    ;
+    @macchiato: {
+        @rosewater: #f4dbd6;
+        @flamingo: #f0c6c6;
+        @pink: #f5bde6;
+        @mauve: #c6a0f6;
+        @red: #ed8796;
+        @maroon: #ee99a0;
+        @peach: #f5a97f;
+        @yellow: #eed49f;
+        @green: #a6da95;
+        @teal: #8bd5ca;
+        @sky: #91d7e3;
+        @sapphire: #7dc4e4;
+        @blue: #8aadf4;
+        @lavender: #b7bdf8;
+        @text: #cad3f5;
+        @subtext1: #b8c0e0;
+        @subtext0: #a5adcb;
+        @overlay2: #939ab7;
+        @overlay1: #8087a2;
+        @overlay0: #6e738d;
+        @surface2: #5b6078;
+        @surface1: #494d64;
+        @surface0: #363a4f;
+        @base: #24273a;
+        @mantle: #1e2030;
+        @crust: #181926;
+    }
+    ;
+    @mocha: {
+        @rosewater: #f5e0dc;
+        @flamingo: #f2cdcd;
+        @pink: #f5c2e7;
+        @mauve: #cba6f7;
+        @red: #f38ba8;
+        @maroon: #eba0ac;
+        @peach: #fab387;
+        @yellow: #f9e2af;
+        @green: #a6e3a1;
+        @teal: #94e2d5;
+        @sky: #89dceb;
+        @sapphire: #74c7ec;
+        @blue: #89b4fa;
+        @lavender: #b4befe;
+        @text: #cdd6f4;
+        @subtext1: #bac2de;
+        @subtext0: #a6adc8;
+        @overlay2: #9399b2;
+        @overlay1: #7f849c;
+        @overlay0: #6c7086;
+        @surface2: #585b70;
+        @surface1: #45475a;
+        @surface0: #313244;
+        @base: #1e1e2e;
+        @mantle: #181825;
+        @crust: #11111b;
+    }
+    ;
 }
+// vim:ft=less
