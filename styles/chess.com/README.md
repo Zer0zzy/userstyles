@@ -10,21 +10,21 @@
 
 <p align="center">
 	<a href="https://github.com/catppuccin/userstyles/issues?q=is%3Aissue+is%3Aopen+label%3Achess.com"><img src="https://img.shields.io/github/issues/catppuccin/userstyles/chess.com?colorA=363a4f&colorB=f5a97f&style=for-the-badge"></a>
-	<a href="https://raw.githubusercontent.com/catppuccin/userstyles/main/styles/chess.com/catppuccin.user.css"><img src="https://img.shields.io/badge/stylus-install-cba6f7?colorA=363a4f&style=for-the-badge"></a>
+	<a href="https://raw.githubusercontent.com/catppuccin/userstyles/main/styles/chess.com/catppuccin.user.less"><img src="https://img.shields.io/badge/stylus-install-cba6f7?colorA=363a4f&style=for-the-badge"></a>
 </p>
 
-<p align="center">
-  <img src="preview.webp"/>
-</p>
+## Usage
+
+See [the userstyle usage instructions](https://userstyles.catppuccin.com/getting-started/usage/).
 
 
+## 💝 Current Maintainer
+- [uncenter](https://github.com/uncenter)
 
-## 💝 Current Maintainers
+## 💖 Past Maintainers
+- [skelebro1](https://github.com/skelebro1)
+- [isabelroses](https://github.com/isabelroses)
 - [coldenate](https://github.com/coldenate)
-- [Isabel](https://github.com/isabelroses)
-
-## 💖 Past Maintainer
-- [skele](https://github.com/skelebro1)
 
 &nbsp;
 

@@ -1,41 +1,23 @@
-#!/usr/bin/env -S deno run -A
-import { join } from "std/path/mod.ts";
-import { portsSchema, REPO_ROOT, userStylesSchema } from "@/deps.ts";
-import type { PortsSchema, UserStylesSchema } from "@/types/mod.ts";
+import * as path from "@std/path";
+import { REPO_ROOT } from "@/constants.ts";
 
 import { syncIssueLabels } from "@/generate/labels.ts";
-import { generateMainReadme } from "@/generate/readme-repo.ts";
 import { generateStyleReadmes } from "@/generate/readme-styles.ts";
-import { updateFile } from "@/generate/utils.ts";
-import { validateYaml } from "@/utils.ts";
+import { writeWithPreamble } from "@/generate/utils.ts";
+import {
+  getAuthenticatedOctokit,
+  getUserstylesData,
+  getUserstylesTeamMembers,
+} from "@/utils.ts";
 
-const userstylesYaml = Deno.readTextFileSync(
-  join(REPO_ROOT, "scripts/userstyles.yml"),
-);
-const portsYaml = await fetch(
-  "https://raw.githubusercontent.com/catppuccin/catppuccin/main/resources/ports.yml",
-).then((res) => res.text());
-
-const [portsData, userstylesData] = await Promise.all([
-  await validateYaml<PortsSchema.PortsSchema>(
-    portsYaml,
-    portsSchema,
-  ),
-  await validateYaml<UserStylesSchema.UserstylesSchema>(
-    userstylesYaml,
-    userStylesSchema,
-  ),
-]);
-
-if (!userstylesData.userstyles) {
-  console.error("No userstyles found");
-  Deno.exit(1);
+if (!Deno.env.get("CI")) {
+  throw new Error(
+    "This script should only be used in CI. Generated READMEs and other health files are automatically updated after pull requests are merged.",
+  );
 }
 
-/**
- * Generate the main README.md, listing all ports as a table of contents
- */
-await generateMainReadme(userstylesData.userstyles, portsData);
+const userstylesData = getUserstylesData();
+
 /**
  * Generate README.md files for each style
  */
@@ -52,25 +34,36 @@ await syncIssueLabels(userstylesData.userstyles);
 /**
  * Keep `.github/CODEOWNERS` in sync with the userstyle metadata.
  */
-const CODEOWNERS_FILE = ".github/CODEOWNERS";
-const maintainersCodeOwners = () => {
-  return Object.entries(userstylesData.userstyles)
+function maintainersCodeOwners() {
+  return Object.entries(userstylesData.userstyles!)
     .filter(([_, { "current-maintainers": currentMaintainers }]) =>
       currentMaintainers.length > 0
     )
     .map(([slug, { "current-maintainers": currentMaintainers }]) => {
       const codeOwners = currentMaintainers
-        .map((maintainer) => `@${maintainer.url.split("/").pop()}`)
+        .map((name) => `@${name}`)
         .join(" ");
       return `/styles/${slug} ${codeOwners}`;
     })
     .join("\n");
-};
-const userstylesStaffCodeOwners = () => {
-  const paths = [CODEOWNERS_FILE, "/scripts/", "/template/"];
-  return paths.map((path) => `${path} @catppuccin/userstyles-staff`).join("\n");
-};
-await updateFile(
-  join(REPO_ROOT, CODEOWNERS_FILE),
-  `${maintainersCodeOwners()}\n\n${userstylesStaffCodeOwners()}`,
+}
+async function userstylesStaffCodeOwners() {
+  const paths = ["/.github/", "/scripts/", "/template/", "/lib/"];
+
+  const octokit = getAuthenticatedOctokit();
+  // Set codeowners to include each member of the userstyles-staff team specifically instead of the team as a whole,
+  // to require individual reviews from each member instead of just one on behalf of the team.
+  const staffMembers = await getUserstylesTeamMembers(
+    octokit,
+    "userstyles-staff",
+  );
+  return paths.map((path) =>
+    `${path} ${staffMembers.map((member) => "@" + member).join(" ")}`
+  ).join(
+    "\n",
+  );
+}
+await writeWithPreamble(
+  path.join(REPO_ROOT, ".github/CODEOWNERS"),
+  `${maintainersCodeOwners()}\n\n${await userstylesStaffCodeOwners()}`,
 );

@@ -1,27 +1,26 @@
-// @deno-types="@/types/usercss-meta.d.ts";
-import usercssMeta from "usercss-meta";
-import * as color from "std/fmt/colors.ts";
-import { sprintf } from "std/fmt/printf.ts";
-import type { WalkEntry } from "std/fs/walk.ts";
-import { join, relative } from "std/path/mod.ts";
-
-import { REPO_ROOT } from "@/deps.ts";
-import { log } from "@/lint/logger.ts";
-import { formatListOfItems } from "@/utils.ts";
 import type { Userstyles } from "@/types/userstyles.d.ts";
+import { REPO_ROOT } from "@/constants.ts";
 
-export const verifyMetadata = async (
-  entry: WalkEntry,
+import * as color from "@std/fmt/colors";
+import * as path from "@std/path";
+import { sprintf } from "@std/fmt/printf";
+
+// @ts-types="@/types/usercss-meta.d.ts";
+import usercssMeta from "usercss-meta";
+import { log } from "@/logger.ts";
+import { formatListOfItems } from "@/utils.ts";
+
+export async function verifyMetadata(
+  file: string,
   content: string,
   userstyle: string,
   userstyles: Userstyles,
   fix: boolean,
-) => {
+) {
   // `usercss-meta` prohibits any '\r' characters, which seem to be present on Windows.
   content = content.replaceAll("\r\n", "\n");
 
-  const assert = assertions(userstyle, userstyles);
-  const file = relative(REPO_ROOT, entry.path);
+  const assertions = generateAssertions(userstyle, userstyles);
 
   const { metadata, errors: parsingErrors } = usercssMeta.parse(content, {
     allowErrors: true,
@@ -29,43 +28,69 @@ export const verifyMetadata = async (
   const lines = content.split("\n");
 
   // Pretty print / annotate the parsing errors.
-  parsingErrors.map((e) => {
-    let startLine = 0;
-    for (const line of lines) {
-      startLine++;
-      e.index -= line.length + 1;
-      if (e.index < 0) break;
+  for (const error of parsingErrors) {
+    let startLine;
+    if (error.index !== undefined && !Number.isNaN(error.index)) {
+      startLine = 0;
+      for (const line of lines) {
+        startLine++;
+        error.index -= line.length + 1;
+        if (error.index < 0) break;
+      }
     }
-    log(e.message, { file, startLine, content });
-  });
 
-  for (const [key, expected] of Object.entries(assert)) {
+    // Skip "missing mandatory metadata property" ParseError, assertions checks below will cover.
+    if (error.code === "missingMandatory") continue;
+
+    log.error(error.message, {
+      file,
+      startLine,
+      content,
+    });
+  }
+
+  for (const [key, expected] of Object.entries(assertions)) {
     const current = metadata[key];
+
+    const atKey = "@" + key;
 
     if (current !== expected) {
       const line = lines
-        .findIndex((line) => line.includes(key)) + 1;
+        .findIndex((line) => line.includes(`${atKey} `)) + 1;
 
       const message = current === undefined
-        ? sprintf("Metadata `%s` should not be undefined", color.bold(key))
+        ? sprintf(
+          "UserCSS metadata property `%s` is undefined",
+          color.bold(atKey),
+        )
         : sprintf(
-          'Metadata `%s` should be "%s" but is "%s"',
-          color.bold(key),
+          'UserCSS metadata property `%s` should be "%s" but is "%s"',
+          color.bold(atKey),
           color.green(expected),
           color.red(String(current)),
         );
 
-      log(message, {
+      log.error(message, {
         file,
         startLine: line !== 0 ? line : undefined,
         content,
-      }, "warning");
+      });
+
+      if (fix) {
+        content = content.replace(
+          `${atKey} ${current}`,
+          `${atKey} ${expected}`,
+        );
+      }
     }
   }
 
-  const template =
-    (await Deno.readTextFile(join(REPO_ROOT, "template/catppuccin.user.css")))
-      .split("\n");
+  Deno.writeTextFileSync(file, content);
+
+  const template = (await Deno.readTextFile(
+    path.join(REPO_ROOT, "template/catppuccin.user.less"),
+  ))
+    .split("\n");
 
   for (const variable of ["darkFlavor", "lightFlavor", "accentColor"]) {
     const declaration = `@var select ${variable}`;
@@ -80,7 +105,7 @@ export const verifyMetadata = async (
         .findLastIndex((line: string) => line.includes("==/UserStyle== */")) +
         1;
 
-      log(
+      log.error(
         sprintf(
           "Metadata variable `%s` should exist",
           color.bold(variable),
@@ -90,7 +115,6 @@ export const verifyMetadata = async (
           startLine: line !== 0 ? line : undefined,
           content,
         },
-        "warning",
       );
     } else if (expected.trim() !== lines[current - 1].trim()) {
       const message = sprintf(
@@ -99,11 +123,11 @@ export const verifyMetadata = async (
         (/\[[^\]]+\]/.exec(expected) as RegExpExecArray)[0],
       );
 
-      log(message, {
+      log.error(message, {
         file,
         startLine: current,
         content,
-      }, "warning");
+      });
 
       if (fix) {
         content = content.replace(lines[current - 1], expected);
@@ -122,38 +146,44 @@ export const verifyMetadata = async (
 
   return {
     globalVars,
-    isLess: metadata.preprocessor === assert.preprocessor,
+    isLess: metadata.preprocessor === assertions.preprocessor,
     fixed: content,
   };
-};
+}
 
-const assertions = (userstyle: string, userstyles: Userstyles) => {
+function generateAssertions(userstyle: string, userstyles: Userstyles) {
   const prefix = "https://github.com/catppuccin/userstyles";
+  const userstyleData = userstyles[userstyle];
 
-  if (!userstyles[userstyle]) {
-    log("Metadata section for this userstyle has not been added", {
-      file: "scripts/userstyles.yml",
-    }, "error");
+  if (!userstyleData) {
+    log.error(
+      `Metadata section for \`${color.bold(userstyle)}\` userstyle is missing`,
+      {
+        file: "scripts/userstyles.yml",
+      },
+    );
     Deno.exit(1);
   }
 
   return {
     name: `${
-      Array.isArray(userstyles[userstyle].name)
-        ? (userstyles[userstyle].name as string[]).join("/")
-        : userstyles[userstyle].name
+      [
+        userstyleData.name,
+        ...Object.values(userstyleData.supports ?? {}).map(({ name }) => name),
+      ].join("/")
     } Catppuccin`,
     namespace: `github.com/catppuccin/userstyles/styles/${userstyle}`,
     homepageURL: `${prefix}/tree/main/styles/${userstyle}`,
     description: `Soothing pastel theme for ${
-      Array.isArray(userstyles[userstyle].name)
-        ? formatListOfItems(userstyles[userstyle].name as string[])
-        : userstyles[userstyle].name
+      formatListOfItems([
+        userstyleData.name,
+        ...Object.values(userstyleData.supports ?? {}).map(({ name }) => name),
+      ])
     }`,
     author: "Catppuccin",
-    updateURL: `${prefix}/raw/main/styles/${userstyle}/catppuccin.user.css`,
+    updateURL: `${prefix}/raw/main/styles/${userstyle}/catppuccin.user.less`,
     supportURL: `${prefix}/issues?q=is%3Aopen+is%3Aissue+label%3A${userstyle}`,
     license: "MIT",
     preprocessor: "less",
   };
-};
+}

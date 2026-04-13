@@ -5,10 +5,14 @@
  */
 export default {
   extends: "stylelint-config-standard",
-  plugins: ["./scripts/lint/stylelint-custom/optimizedSvgs.js"],
+  plugins: [
+    "./scripts/lint/stylelint-custom/index.js",
+  ],
   customSyntax: "postcss-less",
   rules: {
     "catppuccin/optimized-svgs": true,
+    "catppuccin/color-operations": true,
+    "catppuccin/no-redundant-parent-selector": true,
 
     "selector-class-pattern": null,
     "custom-property-pattern": null,
@@ -175,7 +179,11 @@ export default {
       },
     ],
     "function-name-case": null,
+    "at-rule-no-vendor-prefix": null,
 
     "no-descending-specificity": null,
+    "selector-not-notation": null,
+
+    "import-notation": null,
   },
 };

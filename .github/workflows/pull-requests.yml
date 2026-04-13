@@ -5,18 +5,16 @@ on:
 
 jobs:
   triage:
-    name: Add labels
     runs-on: ubuntu-latest
-    if: ${{ !contains(github.event.pull_request.title, '(tree-wide)') }}
+    if: ${{ !contains(github.event.pull_request.title, '(tree-wide)') && !contains(github.event.pull_request.title, '(treewide)') }}
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Add pull request labels
-        uses: actions/labeler@v4.0.3
+        uses: actions/labeler@v4.3.0
         with:
           configuration-path: .github/pr-labeler.yml
           sync-labels: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
